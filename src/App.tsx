@@ -10,7 +10,8 @@ function App() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // prevent page reload
     console.log(text);
-    await textToSpeech(text);
+    const audio = await textToSpeech(text);
+    audio?.play();
   };
 
   return (
@@ -24,7 +25,7 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      <form className="card" onSubmit={handleSubmit}>
+      <form className="card" onSubmit={async () => await handleSubmit}>
         <p>Write text to change to speech</p>
         <input
           onChange={(e) => setText(e.target.value)}

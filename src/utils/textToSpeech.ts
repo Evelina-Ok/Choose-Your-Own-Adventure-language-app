@@ -17,9 +17,10 @@ export const textToSpeech = async (
     body,
   };
 
+  const voiceId = "9BWtsMINqrJLrRacOk9x";
   try {
     const response = await fetch(
-      "https://api.elevenlabs.io/v1/text-to-speech/9BWtsMINqrJLrRacOk9x",
+      "https://api.elevenlabs.io/v1/text-to-speech/" + voiceId,
       options
     );
     const audioBlob = await response.blob();
