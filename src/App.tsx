@@ -3,9 +3,12 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { textToSpeech } from "./utils/textToSpeech";
+import Button from "./components/button";
 
 function App() {
   const [text, setText] = useState<string>("");
+  const [firstTime, setFirstTime]= useState(true)
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // prevent page reload
@@ -36,6 +39,9 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      {!firstTime ? <><Button text="CONTINUE"/>
+      <Button text="CHAPTERS"/>
+      <Button text="START GAME IN ANOTHER LANGUAGE"/></>: <Button text="START"/>}
     </>
   );
 }
