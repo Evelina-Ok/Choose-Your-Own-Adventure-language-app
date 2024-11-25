@@ -1,9 +1,11 @@
 export function ListenBttn() {
   return (
-    <button>
-      <div className=" w-12 rounded-full bg-yellow-500">
-        <span className="icon-[material-symbols--select-to-speak-outline-rounded]"></span>
+    <button className="w-[80px] h-[80px] rounded-full bg-yellow-500 p-2.5" type="button">
+      <div className="">
+        <span className="size-[2rem] icon-[material-symbols--select-to-speak-outline-rounded]"></span>
       </div>
     </button>
   );
 }
+
+  
