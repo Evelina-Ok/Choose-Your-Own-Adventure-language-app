@@ -1,8 +1,7 @@
-import React from 'react';
-import BackArrowIcon from './assets/BackArrow.svg'; 
-
+import BackArrowIcon from '../assets/BackArrow.svg'; 
+ 
 interface BackArrowProps {
-  onClick?: () => void; // Optional: Custom click behavior
+  onClick?: () => void;
 }
 
 const BackArrow: React.FC<BackArrowProps> = ({ onClick }) => {
@@ -10,7 +9,7 @@ const BackArrow: React.FC<BackArrowProps> = ({ onClick }) => {
     if (onClick) {
       onClick();
     } else {
-      console.log('Back button clicked!'); // Default action
+      console.log('Back button clicked!'); 
     }
   };
 
@@ -21,7 +20,7 @@ const BackArrow: React.FC<BackArrowProps> = ({ onClick }) => {
    
     >
       {}
-      <img src={BackArrowIcon} alt="Back Arrow" className="w-45px h-40px mr-25 mt-25 focus:outline-none" />
+      <img src={BackArrowIcon} alt="Back Arrow" className="w-45px h-40px mr-25 mt-25" />
     </button>
   );
 };

@@ -8,7 +8,7 @@ interface FlagCardProps {
 const FlagCard: React.FC<FlagCardProps> = ({ country, image }) => {
   return (
     <div className=" rounded-lg  p-4 flex flex-col items-center">
-      {}
+      
       <img
         src={image}
         alt={`${country} flag`}
