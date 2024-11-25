@@ -1,5 +1,5 @@
 import React from 'react';
-import FlagCard from './/components/FlagCard';
+import  from './/components/FlagCard';
 import './App.css';
 
 const App: React.FC = () => {
