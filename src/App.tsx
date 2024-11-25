@@ -1,7 +1,7 @@
 import React from 'react';
 import FlagCard from './/components/FlagCard';
 import './App.css';
-import BackArrow from './/components/BackArrow'; // Import the BackArrow component
+import BackArrow from './/components/BackArrow'; 
 function App() {
   const flags = [
     { country: 'American', image: 'src/assets/usaFlag.svg' },
@@ -24,7 +24,7 @@ function App() {
         YOU WANT TO LEARN
       </h1>
 
-      {/* Responsive Grid */}
+      {}
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {flags.map((flag) => (
           <FlagCard key={flag.country} country={flag.country} image={flag.image} />

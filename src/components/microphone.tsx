@@ -1,16 +1,15 @@
 import React from 'react';
-import MicrophoneIcon from 'src/assets/Microphone.svg'; // Path to the microphone SVG icon
+import MicrophoneIcon from './assets/Microphone.svg'; 
 
 interface MicrophoneProps {
-  onClick?: () => void; // Optional: Define behavior when the microphone is clicked
+  onClick?: () => void; 
 }
 
 const Microphone: React.FC<MicrophoneProps> = ({ onClick }) => {
   const handleMicrophoneClick = () => {
     if (onClick) {
       onClick();
-    } else {
-      console.log('Microphone activated!'); // Default action
+   
     }
   };
 
