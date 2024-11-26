@@ -3,7 +3,7 @@ type Props={
 }
 const Button = ({text}:Props) => {
     return (
-        <button className="w-80 bg-white text-black py-3 rounded-full ">{text}</button>
+        <button className="w-80 mb-8 bg-white text-black py-3 rounded-full ">{text}</button>
     )
 }
 
