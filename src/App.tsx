@@ -10,7 +10,7 @@ function App() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // prevent page reload
     console.log(text);
-    const audio = await textToSpeech(text);
+    const audio = await textToSpeech(true);
     audio?.play();
   };
 
