@@ -1,7 +1,5 @@
-import FlagCard from "./components/FlagCard";
-import "./App.css";
-import BackArrow from "./components/BackArrow";
-import microphone from "./components/Microphone";
+import FlagCard from "../../components/FlagCard";
+
 function App() {
   const flags = [
     { country: "American", image: "src/assets/usaFlag.svg" },
