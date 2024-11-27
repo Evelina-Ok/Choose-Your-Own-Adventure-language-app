@@ -1,4 +1,3 @@
-
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -37,8 +36,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif; /* Replace with your font */
-  background-color: #6b7280; /* Tailwind's `bg-gray-500` equivalent */
+  font-family: "Inter", sans-serif; /* our font */
+  background-color: #6b7280;
   height: 100%;
   width: 100%;
 }
@@ -51,4 +50,3 @@ body {
   justify-content: center;
   align-items: center;
 }
-
