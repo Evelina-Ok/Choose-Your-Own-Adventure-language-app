@@ -1,13 +1,14 @@
 import { FormEvent, useEffect, useState } from "react";
 import { ChatSession, GoogleGenerativeAI } from "@google/generative-ai";
 
-const API_KEY = "AIzaSyDqCxUEr1l4XqKawhoBw3jkUqwxf1sq56M";
+const API_KEY = import.meta.env.VITE_API_KEY;
 const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({model: "gemini-pro"});
 
-let PROMPT =  `Let's create a "Choose Your Own Adventure" game. Start the story with an engaging opening and provide 3 distinct options for the player to choose from. 
-After the player picks an option, continue the story coherently with 1-3 sentences, then provide the next 3 options. 
-Maintain the continuity of the story and log all interactions. Do not add new line delimiters in your response.`;
+let PROMPT =  `Let's create a "Choose Your Own Adventure" game. Start the story with an engaging opening and provide 3 distinct options for me to choose from. 
+Only after I pick an option, continue the story coherently with 1-2 sentences and then provide the next 3 options.The again, only I choose an option continue with the story.
+Maintain the continuity of the story and log all interactions. Do not add new line delimiters or titles in your response. Do not use symbols except for numbers.
+Options should be defined as returned as "Option 1-3"`;
 
 interface Message {
     role: string;
@@ -17,12 +18,12 @@ interface Message {
 export function ChooseAdventureGame () {
     const [messages, setMessages] = useState<Message[]>([]); // Stores the entire story
     const [userInput, setUserInput] = useState(""); // Tracks user's chosen option
-    const [chat, setChat] = useState<ChatSession | null>(null); // AI chat session
+    const [chat, setChat] = useState<ChatSession | null>(); // AI chat session
 
     useEffect(() => {
         const chatSession = model.startChat({
             generationConfig: {
-                maxOutputTokens: 1200,
+                maxOutputTokens: 800,
             },
         });
         setChat(chatSession);

@@ -3,7 +3,8 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { textToSpeech } from "./utils/textToSpeech";
-import { ChooseAdventureGame } from "./components/AIPrompt/AIPrompt";
+// import { ChooseAdventureGame } from "./components/AIPrompt/AIPrompt";
+import { ChooseAdventure } from "./components/AIPrompt/Prompt";
 
 function App() {
   const [text, setText] = useState<string>("");
@@ -17,7 +18,7 @@ function App() {
 
   return (
     <>
-    <ChooseAdventureGame />
+    <ChooseAdventure />
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
