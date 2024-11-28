@@ -7,10 +7,10 @@ export function LandingPage() {
   
   
     return (
+      
     <div className="bg-gray-700 flex justify-center h-screen w-screen">
-
       <div className="text-center text-white">
-        <h1 className="mb-80 text-4xl font-bold pt-48">TALK TO ME</h1>    
+        <h1 className="mb-80 text-4xl font-bold font-amatic pt-48">TALK TO ME</h1>    
 
     {!firstTime ? <><Button text="CONTINUE"/>
 
