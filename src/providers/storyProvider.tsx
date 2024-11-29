@@ -35,11 +35,13 @@ const StoryContext = createContext<{
   story: Story;
   latestScenario: AIResponse | undefined;
   isUpdating: boolean;
+  isNew: boolean;
   sendAnswer: (text: string) => Promise<void>;
 }>({
   story: [],
   sendAnswer: async () => {},
   isUpdating: false,
+  isNew: true,
   latestScenario: undefined,
 });
 
@@ -78,10 +80,10 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
     const latestMessage = story[story.length - 1].parts[0].text;
     latestScenario = latestMessage && JSON.parse(latestMessage);
   }
-
+const isNew = story.length<2
   return (
     <StoryContext.Provider
-      value={{ story, latestScenario, sendAnswer, isUpdating }}
+      value={{ story, latestScenario, sendAnswer, isUpdating, isNew }}
     >
       {children}
     </StoryContext.Provider>
