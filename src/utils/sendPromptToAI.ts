@@ -9,10 +9,12 @@ export const sendPromptToAI = async (session: ChatSession, prompt: string) => {
   return response.text();
 };
 
+type AIResponse = {possibleOptions: string[], scenario: string}
+
 export const generateContent = async (
   model: GenerativeModel,
   prompt: string
-) => {
+):Promise<AIResponse> => {
   const result = await model.generateContent(prompt);
   const text = result.response.text();
   console.log("generated JSON is", JSON.parse(text));

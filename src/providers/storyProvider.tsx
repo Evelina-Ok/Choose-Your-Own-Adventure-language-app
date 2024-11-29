@@ -35,6 +35,9 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
   const [story, setStory] = useState<MessageAndSelectedOption[]>([]);
   const [isUpdating, setIsUpdating] = useState<boolean>(true);
 
+  useEffect(() => {console.log('story', story);
+  },[story])
+
   // Scenario from the AI
   const addScenario = (scenario: string) => {
     if (story.length === 0) {
@@ -63,10 +66,14 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    generateContent(model, "GIVE me a scenario");
+    const getInitialScenario = async () => {
+      const response = await generateContent(model, INTIIAL_PROMPT);
+      addScenario
+    }
+
     // send initial prompt
     if (!story.length) {
-      getScenario(INTIIAL_PROMPT);
+      getInitialScenario();
     } else
       console.log("should send current story at this stage so we can continue");
 
