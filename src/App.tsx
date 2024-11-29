@@ -4,6 +4,8 @@ import "./App.css";
 
 import { StoryProvider } from "./providers/storyProvider";
 import { ChooseAdventureGame } from "./components/chooseAdventureGame";
+import { LandingPage } from "./Pages/LandingPage/LandingPage";
+import { FlagPage } from "./Pages/FlagPage/FlagPage";
 
 
 function App() {
@@ -12,7 +14,7 @@ function App() {
   return (
 
     <StoryProvider>
-      <ChooseAdventureGame />
+      <FlagPage />
       </StoryProvider>
   );
 }

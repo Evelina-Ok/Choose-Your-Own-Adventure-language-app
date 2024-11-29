@@ -1,6 +1,6 @@
 import FlagCard from "../../components/FlagCard";
 
-function App() {
+export function FlagPage () {
   const flags = [
     { country: "American", image: "src/assets/usaFlag.svg" },
     { country: "Spanish", image: "src/assets/SpainFlag.svg" },
@@ -31,4 +31,3 @@ function App() {
   );
 }
 
-export default App;
