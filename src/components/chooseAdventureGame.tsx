@@ -3,7 +3,7 @@ import { useStory } from "../providers/storyProvider";
 import { Options } from "./options";
 
 export function ChooseAdventureGame() {
-  const { story, isUpdating, sendAnswer } = useStory();
+  const { latestScenario, isUpdating, sendAnswer } = useStory();
   const [selectedOption, setSelectedOption] = useState<string>("");
 
   const handleOnSelect = (option: string) => {
@@ -21,7 +21,9 @@ export function ChooseAdventureGame() {
     }
   };
 
-  const [scenario, answer] = story[story.length - 1] || [];
+  if (!latestScenario) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -31,7 +33,7 @@ export function ChooseAdventureGame() {
           className={`mb-2 py-2 px-3 rounded-xl bg-gray-200 text-black text-left"
           }`}
         >
-          {scenario?.parts}
+          {latestScenario?.scenario}
         </div>
       </div>
       {isUpdating ? (
@@ -39,7 +41,7 @@ export function ChooseAdventureGame() {
       ) : (
         <>
           <Options
-            options={["Option 1", "Option 2", "Option 3"]}
+            options={latestScenario?.possibleOptions}
             onSelect={handleOnSelect}
           />
 

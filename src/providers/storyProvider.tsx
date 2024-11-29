@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { schema, type Message } from "../../types";
+import { schema } from "../../types";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { INTIIAL_PROMPT } from "../prompts";
-import { generateContent, sendPromptToAI } from "../utils/sendPromptToAI";
+import type { Content } from "@google/generative-ai";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const genAI = new GoogleGenerativeAI(API_KEY);
@@ -14,78 +14,75 @@ const model = genAI.getGenerativeModel({
   },
 });
 
-type MessageAndSelectedOption = [scenario: Message, answer: string | null];
+interface UserResponse extends Omit<Content, "role"> {
+  role: "user";
+}
+
+interface ModelResponse extends Omit<Content, "role"> {
+  role: "model";
+}
+
+type Story = Array<UserResponse | ModelResponse>;
+
+type AIResponse = {
+  possibleOptions: [string, string, string];
+  scenario: string;
+};
 
 // initialises the chat and stores the story
 // stores the story so we can re-use again
 const StoryContext = createContext<{
-  story: MessageAndSelectedOption[];
+  story: Story;
+  latestScenario: AIResponse | undefined;
   isUpdating: boolean;
   sendAnswer: (text: string) => Promise<void>;
-}>({ story: [], sendAnswer: async () => {}, isUpdating: false });
-
-const chatSession = model.startChat({
-  generationConfig: {
-    maxOutputTokens: 800,
-    responseSchema: schema,
-  },
+}>({
+  story: [],
+  sendAnswer: async () => {},
+  isUpdating: false,
+  latestScenario: undefined,
 });
 
 export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
-  const [story, setStory] = useState<MessageAndSelectedOption[]>([]);
-  const [isUpdating, setIsUpdating] = useState<boolean>(true);
+  const [story, setStory] = useState<Story>([]);
 
-  useEffect(() => {console.log('story', story);
-  },[story])
-
-  // Scenario from the AI
-  const addScenario = (scenario: string) => {
-    if (story.length === 0) {
-      setStory([[{ role: "ai", parts: scenario }, null]]);
-    } else {
-      setStory([...story, [{ role: "ai", parts: scenario }, null]]);
+  useEffect(() => {
+    if (!story.length || story[story.length - 1].role === "user") {
+      getScenarioFromAI();
     }
-  };
+  }, [story]);
 
-  const addAnswer = (option: string) => {
-    const tmp = [...story];
-    tmp[tmp.length - 1][1] = option;
-    setStory(tmp);
-  };
+  const isUpdating =
+    story.length === 0 || story[story.length - 1].role === "user";
 
-  const getScenario = async (prompt: string) => {
-    // const scenario = await sendPromptToAI(chatSession, prompt);
-    // addScenario(scenario);
-    setIsUpdating(false);
+  const addToStory = (addition: UserResponse | ModelResponse) => {
+    setStory((prev) => [...prev, addition]);
   };
 
   const sendAnswer = async (answer: string) => {
-    setIsUpdating(true);
-    addAnswer(answer);
-    await getScenario(answer);
+    addToStory({ role: "user", parts: [{ text: answer }] });
   };
 
-  useEffect(() => {
-    const getInitialScenario = async () => {
-      const response = await generateContent(model, INTIIAL_PROMPT);
-      addScenario
-    }
-
-    // send initial prompt
+  const getScenarioFromAI = async () => {
     if (!story.length) {
-      getInitialScenario();
-    } else
-      console.log("should send current story at this stage so we can continue");
+      const result = await model.generateContent(INTIIAL_PROMPT);
+      addToStory({ role: "model", parts: [{ text: result.response.text() }] });
+    } else {
+      const result = await model.generateContent({ contents: story });
+      addToStory({ role: "model", parts: [{ text: result.response.text() }] });
+    }
+  };
 
-    return () => {
-      // cleanup and remove the chat session
-    };
-  }, []);
+  let latestScenario: AIResponse | undefined = undefined;
+  if (!isUpdating) {
+    const latestMessage = story[story.length - 1].parts[0].text;
+    latestScenario = latestMessage && JSON.parse(latestMessage);
+  }
 
-  // we need some way to return options to the user
-  // we need some way to allow users to see previous Q and As and restart their journey from a point they choose
   return (
-    <StoryContext.Provider value={{ story, sendAnswer, isUpdating }}>
+    <StoryContext.Provider
+      value={{ story, latestScenario, sendAnswer, isUpdating }}
+    >
       {children}
     </StoryContext.Provider>
   );

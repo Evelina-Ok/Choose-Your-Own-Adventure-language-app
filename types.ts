@@ -6,7 +6,8 @@ export type Message = {
 };
 
 export const schema: ResponseSchema = {
-  description: "A scenario with a question and three possible options",
+  description:
+    "A scenario with a question and three possible options. Used as part of a simple choose your own adventure game to help people learn a new language and listen to pronunciation.",
   type: SchemaType.OBJECT,
   properties: {
     scenario: {
