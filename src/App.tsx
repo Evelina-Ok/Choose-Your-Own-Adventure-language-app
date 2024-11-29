@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import { textToSpeech } from "./utils/textToSpeech";
+import { LandingPage } from "./pages/LandingPage/LandingPage";
 
 function App() {
   const [text, setText] = useState<string>("");
@@ -14,6 +15,7 @@ function App() {
 
   return (
     <>    
+    <LandingPage />
       <form className="card" onSubmit={async () => await handleSubmit}>
         <p>Write text to change to speech</p>
         <input

@@ -4,7 +4,7 @@ type Props={
 const Button = ({text}:Props) => {
     return (
         <>
-        <button className="w-80 mb-8 bg-white text-black font-bold font-amatic py-3 rounded-full ">
+        <button className="w-80 mb-8 bg-white text-black font-bold font-['Amatic_SC'] text-3xl py-3 rounded-full ">
             {text}
         </button>
         </>
