@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { schema } from "../../types";
+import { Language, LanguageProficiency, schema } from "../../types";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { INTIIAL_PROMPT } from "../prompts";
+import { initialPrompt } from "../prompts";
 import type { Content } from "@google/generative-ai";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -35,25 +35,41 @@ const StoryContext = createContext<{
   story: Story;
   latestScenario: AIResponse | undefined;
   isUpdating: boolean;
-  sendAnswer: (text: string) => Promise<void>;
+  sendAnswer: (text: string) => void;
+  changeLanguage: (language: Language) => Promise<void>;
+  changeReadingAge: (readingAge: LanguageProficiency) => Promise<void>;
+  restartStory: (
+    language: Language,
+    readingAge: LanguageProficiency
+  ) => Promise<void>;
 }>({
   story: [],
   sendAnswer: async () => {},
   isUpdating: false,
   latestScenario: undefined,
+  changeLanguage: async () => {},
+  changeReadingAge: async () => {},
+  restartStory: async () => {},
 });
 
 export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
   const [story, setStory] = useState<Story>([]);
+  const [readingAge, setReadingAge] =
+    useState<LanguageProficiency>("Beginner (A1)");
+  const [language, setLanguage] = useState<Language>("American");
 
   useEffect(() => {
-    if (!story.length || story[story.length - 1].role === "user") {
+    console.log("story", story);
+    console.log("readingAge", readingAge);
+    console.log("language", language);
+  }, [story, readingAge, language]);
+
+  useEffect(() => {
+    if (!story.length) restartStory(language, readingAge);
+    else if (story[story.length - 1].role === "user") {
       getScenarioFromAI();
     }
   }, [story]);
-
-  const isUpdating =
-    story.length === 0 || story[story.length - 1].role === "user";
 
   const addToStory = (addition: UserResponse | ModelResponse) => {
     setStory((prev) => [...prev, addition]);
@@ -64,15 +80,33 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const getScenarioFromAI = async () => {
-    if (!story.length) {
-      const result = await model.generateContent(INTIIAL_PROMPT);
-      addToStory({ role: "model", parts: [{ text: result.response.text() }] });
-    } else {
-      const result = await model.generateContent({ contents: story });
-      addToStory({ role: "model", parts: [{ text: result.response.text() }] });
-    }
+    const result = await model.generateContent({ contents: story });
+    addToStory({ role: "model", parts: [{ text: result.response.text() }] });
   };
 
+  const changeLanguage = async (newLanguage: Language) => {
+    setLanguage(newLanguage);
+    await restartStory(newLanguage, readingAge);
+  };
+
+  const changeReadingAge = async (newReadingAge: LanguageProficiency) => {
+    setReadingAge(newReadingAge);
+    await restartStory(language, newReadingAge);
+  };
+
+  const restartStory = async (
+    language: Language,
+    readingAge: LanguageProficiency
+  ) => {
+    const result = await model.generateContent(
+      initialPrompt(language, readingAge)
+    );
+    setStory([{ role: "model", parts: [{ text: result.response.text() }] }]);
+  };
+
+  // Define constants to pass to children
+  const isUpdating =
+    story.length === 0 || story[story.length - 1].role === "user";
   let latestScenario: AIResponse | undefined = undefined;
   if (!isUpdating) {
     const latestMessage = story[story.length - 1].parts[0].text;
@@ -81,7 +115,15 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <StoryContext.Provider
-      value={{ story, latestScenario, sendAnswer, isUpdating }}
+      value={{
+        story,
+        latestScenario,
+        sendAnswer,
+        isUpdating,
+        changeLanguage,
+        changeReadingAge,
+        restartStory: () => restartStory(language, readingAge),
+      }}
     >
       {children}
     </StoryContext.Provider>

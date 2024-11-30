@@ -1,7 +1,15 @@
+import { Language } from "../../../types";
 import FlagCard from "../../components/FlagCard";
+import { useStory } from "../../providers/storyProvider";
 
-export function FlagPage () {
-  const flags = [
+type Flag = {
+  country: Language;
+  image: string;
+};
+
+export function FlagPage() {
+  const { changeLanguage } = useStory();
+  const flags: Flag[] = [
     { country: "American", image: "src/assets/usaFlag.svg" },
     { country: "Spanish", image: "src/assets/SpainFlag.svg" },
     { country: "Icelandic", image: "src/assets/IcelandFlag.svg" },
@@ -24,10 +32,10 @@ export function FlagPage () {
             key={flag.country}
             country={flag.country}
             image={flag.image}
+            onClick={async () => await changeLanguage(flag.country)}
           />
         ))}
       </div>
     </div>
   );
 }
-
