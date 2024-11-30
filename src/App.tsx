@@ -8,8 +8,7 @@ import { FlagPage } from "./Pages/FlagPage/FlagPage";
 function App() {
   return (
     <StoryProvider>
-      <FlagPage />
-      <ChooseAdventureGame />
+      <LandingPage />
     </StoryProvider>
   );
 }
