@@ -34,18 +34,20 @@ type AIResponse = {
 const StoryContext = createContext<{
   story: Story;
   latestScenario: AIResponse | undefined;
-  isUpdating: boolean;
+  isLoading: boolean;
   sendAnswer: (text: string) => void;
   changeLanguage: (language: Language) => Promise<void>;
   changeReadingAge: (readingAge: LanguageProficiency) => Promise<void>;
   restartStory: (
-    language: Language,
-    readingAge: LanguageProficiency
+    language?: Language,
+    readingAge?: LanguageProficiency
   ) => Promise<void>;
+  deleteStory: () => void;
 }>({
   story: [],
+  deleteStory: () => {},
   sendAnswer: async () => {},
-  isUpdating: false,
+  isLoading: false,
   latestScenario: undefined,
   changeLanguage: async () => {},
   changeReadingAge: async () => {},
@@ -57,16 +59,11 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
   const [readingAge, setReadingAge] =
     useState<LanguageProficiency>("Beginner (A1)");
   const [language, setLanguage] = useState<Language>("American");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log("story", story);
-    console.log("readingAge", readingAge);
-    console.log("language", language);
-  }, [story, readingAge, language]);
-
-  useEffect(() => {
-    if (!story.length) restartStory(language, readingAge);
-    else if (story[story.length - 1].role === "user") {
+    if (story.length !== 0 && story[story.length - 1].role === "user") {
+      setIsLoading(true);
       getScenarioFromAI();
     }
   }, [story]);
@@ -82,6 +79,7 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
   const getScenarioFromAI = async () => {
     const result = await model.generateContent({ contents: story });
     addToStory({ role: "model", parts: [{ text: result.response.text() }] });
+    setIsLoading(false);
   };
 
   const changeLanguage = async (newLanguage: Language) => {
@@ -94,21 +92,30 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
     await restartStory(language, newReadingAge);
   };
 
+  const deleteStory = () => setStory((prev) => []);
+
   const restartStory = async (
-    language: Language,
-    readingAge: LanguageProficiency
+    thisLanguage: Language = language,
+    thisReadingAge: LanguageProficiency = readingAge
   ) => {
+    setIsLoading((prev) => true);
+    deleteStory();
     const result = await model.generateContent(
-      initialPrompt(language, readingAge)
+      initialPrompt(thisLanguage, thisReadingAge)
     );
-    setStory([{ role: "model", parts: [{ text: result.response.text() }] }]);
+    setStory((prev) => [
+      { role: "model", parts: [{ text: result.response.text() }] },
+    ]);
+    setIsLoading((prev) => false);
   };
 
   // Define constants to pass to children
-  const isUpdating =
-    story.length === 0 || story[story.length - 1].role === "user";
   let latestScenario: AIResponse | undefined = undefined;
-  if (!isUpdating) {
+  if (
+    !isLoading &&
+    story.length > 0 &&
+    story[story.length - 1].role === "model"
+  ) {
     const latestMessage = story[story.length - 1].parts[0].text;
     latestScenario = latestMessage && JSON.parse(latestMessage);
   }
@@ -119,10 +126,11 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
         story,
         latestScenario,
         sendAnswer,
-        isUpdating,
+        isLoading,
         changeLanguage,
         changeReadingAge,
-        restartStory: () => restartStory(language, readingAge),
+        restartStory,
+        deleteStory,
       }}
     >
       {children}
