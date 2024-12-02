@@ -25,3 +25,21 @@ export const schema: ResponseSchema = {
   },
   required: ["scenario", "possibleOptions"], // Ensures all properties are mandatory
 };
+
+export type Language =
+  | "American"
+  | "Spanish"
+  | "Icelandic"
+  | "Italian"
+  | "Polish"
+  | "Norwegian"
+  | "German"
+  | "Danish";
+
+export type LanguageProficiency =
+  | "Beginner (A1)"
+  | "Elementary (A2)"
+  | "Intermediate (B1)"
+  | "Upper Intermediate (B2)"
+  | "Advanced (C1)"
+  | "Proficient (C2)";

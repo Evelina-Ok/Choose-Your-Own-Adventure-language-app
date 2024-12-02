@@ -3,7 +3,14 @@ import { useStory } from "../providers/storyProvider";
 import { Options } from "./options";
 
 export function ChooseAdventureGame() {
-  const { latestScenario, isUpdating, sendAnswer } = useStory();
+  const {
+    latestScenario,
+    isLoading,
+    sendAnswer,
+    story,
+    restartStory,
+    deleteStory,
+  } = useStory();
   const [selectedOption, setSelectedOption] = useState<string>("");
 
   const handleOnSelect = (option: string) => {
@@ -11,15 +18,25 @@ export function ChooseAdventureGame() {
   };
 
   const handleOnConfirm = async () => {
-    if (isUpdating) return; // don't allow multiple prompts to be sent
+    if (isLoading) return; // don't allow multiple prompts to be sent
     if (selectedOption) {
       await sendAnswer(selectedOption);
-      console.log("prompt sent");
     } else {
       // TODO: store some error message somewhere. here or the provider
       console.log("No option selected");
     }
   };
+
+  if (story.length === 0 && !isLoading)
+    return (
+      <button
+        onClick={async () => {
+          await restartStory();
+        }}
+      >
+        Start story
+      </button>
+    );
 
   if (!latestScenario) {
     return <div>Loading...</div>;
@@ -27,6 +44,20 @@ export function ChooseAdventureGame() {
 
   return (
     <div>
+      <button
+        onClick={async () => {
+          await deleteStory();
+        }}
+      >
+        Delete story
+      </button>
+      <button
+        onClick={async () => {
+          await restartStory();
+        }}
+      >
+        Restart story
+      </button>
       <div> Choose Your Adventure </div>
       <div>
         <div
@@ -36,7 +67,7 @@ export function ChooseAdventureGame() {
           {latestScenario?.scenario}
         </div>
       </div>
-      {isUpdating ? (
+      {isLoading ? (
         <div>Thinking...</div>
       ) : (
         <>

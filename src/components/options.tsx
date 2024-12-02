@@ -4,7 +4,6 @@ type OptionsProps = {
 };
 
 export const Options = ({ options, onSelect }: OptionsProps) => {
-  console.log("rendering Options");
   return (
     <div>
       {options.map((option, index) => (
