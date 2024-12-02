@@ -74,6 +74,7 @@ export function ChooseAdventureGame() {
           <Options
             options={latestScenario?.possibleOptions}
             onSelect={handleOnSelect}
+            selectedOption={selectedOption}
           />
 
           <button
