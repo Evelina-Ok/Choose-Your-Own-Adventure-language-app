@@ -1,7 +1,7 @@
 import Button from "../../components/button";
-import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useStory } from "../../providers/storyProvider";
+
 export function LandingPage() {
   const { story } = useStory();
   return (
@@ -12,14 +12,19 @@ export function LandingPage() {
         </h1>
         <div>
           {story.length === 0 ? (
-            <Button text="START" />
+            <NavLink to={"/language"}>
+              <Button text="START" />
+            </NavLink>
           ) : (
             <>
-              <Button text="CONTINUE" />
+              <NavLink to={"/game"}>
+                <Button text="CONTINUE" />
+              </NavLink>
+
               <Button text="CHAPTERS" />
-              
+
               <NavLink to={"/language"}>
-              <Button text="START GAME IN ANOTHER LANGUAGE" />
+                <Button text="START GAME IN ANOTHER LANGUAGE" />
               </NavLink>
             </>
           )}
@@ -28,20 +33,3 @@ export function LandingPage() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

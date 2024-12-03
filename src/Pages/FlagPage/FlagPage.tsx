@@ -29,7 +29,7 @@ export function FlagPage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         {flags.map((flag) => (
-          <NavLink to={"/game"}>
+          <NavLink key={flag.country} to={"/game"}>
           <FlagCard
           
             key={flag.country}
