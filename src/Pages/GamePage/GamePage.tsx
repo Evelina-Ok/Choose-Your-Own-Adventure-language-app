@@ -1,7 +1,11 @@
-import { ChooseAdventureGame } from "../../components/chooseAdventureGame"
+import { BackArrow } from "../../components/BackArrow";
+import { ChooseAdventureGame } from "../../components/chooseAdventureGame";
 
 export const GamePage = () => {
-    return (
-        <ChooseAdventureGame />
-    )
-}
+  return (
+    <>
+      <BackArrow />
+      <ChooseAdventureGame />
+    </>
+  );
+};

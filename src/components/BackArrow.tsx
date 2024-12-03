@@ -4,7 +4,7 @@ interface BackArrowProps {
   onClick?: () => void;
 }
 
-const BackArrow: React.FC<BackArrowProps> = ({ onClick }) => {
+export const BackArrow: React.FC<BackArrowProps> = ({ onClick }) => {
   const handleBackClick = () => {
     if (onClick) {
       onClick();
@@ -16,7 +16,7 @@ const BackArrow: React.FC<BackArrowProps> = ({ onClick }) => {
   return (
     <button
       onClick={handleBackClick}
-      className="absolute top-4 left-4 text-2xl cursor-pointer focus:outline-none"
+      className="absolute top-4 left-4 text-2xl border-none cursor-pointer outline-none bg-transparent"
    
     >
       {}
@@ -25,4 +25,4 @@ const BackArrow: React.FC<BackArrowProps> = ({ onClick }) => {
   );
 };
 
-export default BackArrow;
+

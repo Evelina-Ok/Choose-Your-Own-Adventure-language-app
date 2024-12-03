@@ -44,24 +44,14 @@ export function ChooseAdventureGame() {
 
   return (
     <div>
-      <button
-        onClick={async () => {
-          await deleteStory();
-        }}
-      >
-        Delete story
-      </button>
-      <button
-        onClick={async () => {
-          await restartStory();
-        }}
-      >
-        Restart story
-      </button>
-      <div> Choose Your Adventure </div>
+     
+      <div className="text-center text-white"> 
+      <h1 className="my-6 mb-10 text-6xl font-bold font-['Amatic_SC']">Choose Your Adventure</h1>
+
+      </div>
       <div>
         <div
-          className={`mb-2 py-2 px-3 rounded-xl bg-gray-200 text-black text-left"
+          className={`mb-10 py-2 px-3 rounded-xl bg-gray-200 text-black text-left"
           }`}
         >
           {latestScenario?.scenario}
@@ -85,6 +75,22 @@ export function ChooseAdventureGame() {
           </button>
         </>
       )}
+       <div>
+      <button
+        onClick={async () => {
+          await deleteStory();
+        }}
+      >
+        Delete story
+      </button>
+      <button
+        onClick={async () => {
+          await restartStory();
+        }}
+      >
+        Restart story
+      </button>
+      </div>
     </div>
   );
 }
