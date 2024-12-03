@@ -26,7 +26,7 @@ export function FlagPage() {
     <>
     <BackArrow />
     <div className="min-h-screen w-dvw bg-gray-500 flex flex-col items-center px-4 py-8">
-      <h1 className="my-10 mb-4 text-2xl text-3xl font-bold  text-white text-center font-['Amatic_SC']">
+      <h1 className="my-10 mb-4 text-3xl font-bold  text-white text-center font-['Amatic_SC']">
         CHOOSE LANGUAGE YOU WANT TO LEARN
       </h1>
 
