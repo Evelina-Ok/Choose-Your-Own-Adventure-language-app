@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { Language } from "../../../types";
 import FlagCard from "../../components/FlagCard";
 import { useStory } from "../../providers/storyProvider";
@@ -28,12 +29,16 @@ export function FlagPage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         {flags.map((flag) => (
+          <NavLink key={flag.country} to={"/game"}>
           <FlagCard
+          
             key={flag.country}
             country={flag.country}
             image={flag.image}
             onClick={async () => await changeLanguage(flag.country)}
+            
           />
+          </NavLink>
         ))}
       </div>
     </div>
