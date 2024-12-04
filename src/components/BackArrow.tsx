@@ -8,7 +8,6 @@ export const BackArrow = () => {
       role="button"
       className="absolute top-4 left-4 text-2xl border-none cursor-pointer outline-none bg-transparent"
     >
-      {}
       <img
         src={BackArrowIcon}
         alt="Back Arrow"
