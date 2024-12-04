@@ -1,4 +1,4 @@
-import Button from "../../components/button";
+import Button from "../../components/ButtonStart";
 import { NavLink } from "react-router-dom";
 import { useStory } from "../../providers/storyProvider";
 
