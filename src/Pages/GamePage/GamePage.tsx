@@ -1,7 +1,7 @@
 import { BackArrow } from "../../components/BackArrow";
 import { useState } from "react";
 import { useStory } from "../../providers/storyProvider";
-import { Options } from "../../components/options";
+import { Options } from "../../components/Options";
 
 export function ChooseAdventureGame() {
   const {
