@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useStory } from "../providers/storyProvider";
 import { Options } from "./options";
 
@@ -52,8 +52,8 @@ export function ChooseAdventureGame() {
         Delete story
       </button>
       <button
-        onClick={async () => {
-          await restartStory();
+        onClick={() => {
+          restartStory();
         }}
       >
         Restart story
