@@ -1,14 +1,13 @@
-import MicrophoneIcon from 'src/assets/Microphone.svg'; 
+import MicrophoneIcon from "src/assets/Microphone.svg";
 
 interface MicrophoneProps {
-  onClick?: () => void; 
+  onClick?: () => void;
 }
 
 const Microphone: React.FC<MicrophoneProps> = ({ onClick }) => {
   const handleMicrophoneClick = () => {
     if (onClick) {
       onClick();
-   
     }
   };
 
