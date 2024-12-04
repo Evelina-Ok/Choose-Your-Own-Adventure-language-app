@@ -1,8 +1,8 @@
-import FlagPage from "./Pages/GamePage/FlagPage";
+import ChooseChapter from "./Pages/GamePage/ChooseChapter";
 const App = () => {
   return (
     <div>
-      <FlagPage></FlagPage>
+      <ChooseChapter></ChooseChapter>
     </div>
   );
 };
