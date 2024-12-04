@@ -60,7 +60,11 @@ const Option = ({ text, isSelected = false, ...props }: OptionProps) => {
         role="button"
         aria-disabled={isPlaying}
       >
-        Icon
+        <img
+          src="src/assets/speaker.svg" // our image
+          alt="Play"
+          className="w-full h-full object-cover"
+        />
       </div>
     </div>
   );
