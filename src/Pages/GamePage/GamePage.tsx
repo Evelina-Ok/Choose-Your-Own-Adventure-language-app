@@ -1,7 +1,7 @@
 import { BackArrow } from "../../components/BackArrow";
 import { useState } from "react";
 import { useStory } from "../../providers/storyProvider";
-import { Options } from "../../components/Options";
+import { Options } from "../../components/options";
 
 export function ChooseAdventureGame() {
   const {
@@ -47,7 +47,7 @@ export function ChooseAdventureGame() {
     <div>
      
       <div className="text-center text-white"> 
-      <h1 className="my-6 mb-10 text-6xl font-bold font-['Amatic_SC']">Choose Your Adventure</h1>
+      <h1 className="my-6 mb-10 text-6xl font-bold font-['Jersey_10']">Choose Your Adventure</h1>
 
       </div>
       <div>

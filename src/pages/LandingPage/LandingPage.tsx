@@ -10,7 +10,7 @@ export function LandingPage() {
         <h1 className="my-40 mb-36 text-8xl font-bold font-['Jersey_10']">
           TALK TO ME
         </h1>
-        <div>
+        <div className="flex flex-col">
           {story.length === 0 ? (
             <NavLink to={"/language"}>
               <Button text="START" />
@@ -21,7 +21,9 @@ export function LandingPage() {
                 <Button text="CONTINUE" />
               </NavLink>
 
+              <NavLink to={""}>
               <Button text="CHAPTERS" />
+              </NavLink>
 
               <NavLink to={"/language"}>
                 <Button text="START GAME IN ANOTHER LANGUAGE" />
