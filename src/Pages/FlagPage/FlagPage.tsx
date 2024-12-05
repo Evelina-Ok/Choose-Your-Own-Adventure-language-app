@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { Language } from "../../../types";
 import FlagCard from "../../components/FlagCard";
-import { useStory } from "../../providers/storyProvider";
 import { BackArrow } from "../../components/BackArrow";
+import { useStory } from "../../hooks/useStory";
 
 type Flag = {
   country: Language;
@@ -24,25 +24,25 @@ export function FlagPage() {
 
   return (
     <>
-    <BackArrow />
-    <div className="min-h-screen w-dvw bg-gray-500 flex flex-col items-center px-4 py-8">
-      <h1 className="my-10 mb-4 text-3xl font-bold  text-white text-center font-['Amatic_SC']">
-        CHOOSE LANGUAGE YOU WANT TO LEARN
-      </h1>
+      <BackArrow />
+      <div className="min-h-screen w-dvw bg-gray-500 flex flex-col items-center px-4 py-8">
+        <h1 className="my-10 mb-4 text-3xl font-bold  text-white text-center font-['Amatic_SC']">
+          CHOOSE LANGUAGE YOU WANT TO LEARN
+        </h1>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 ">
-        {flags.map((flag) => (
-          <NavLink key={flag.country} to={"/game"}>
-            <FlagCard
-              key={flag.country}
-              country={flag.country}
-              image={flag.image}
-              onClick={() => changeLanguage(flag.country)}
-            />
-          </NavLink>
-        ))}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 ">
+          {flags.map((flag) => (
+            <NavLink key={flag.country} to={"/game"}>
+              <FlagCard
+                key={flag.country}
+                country={flag.country}
+                image={flag.image}
+                onClick={() => changeLanguage(flag.country)}
+              />
+            </NavLink>
+          ))}
+        </div>
       </div>
-    </div>
     </>
   );
 }

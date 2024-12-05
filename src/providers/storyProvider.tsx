@@ -1,8 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { Language, LanguageProficiency, schema } from "../../types";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { initialPrompt } from "../prompts";
 import type { Content } from "@google/generative-ai";
+import { StoryContext } from "../contexts/storyContext";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const genAI = new GoogleGenerativeAI(API_KEY);
@@ -22,37 +23,15 @@ interface ModelResponse extends Omit<Content, "role"> {
   role: "model";
 }
 
-type Story = Array<UserResponse | ModelResponse>;
+export type Story = Array<UserResponse | ModelResponse>;
 
-type AIResponse = {
+export type AIResponse = {
   possibleOptions: [string, string, string];
   scenario: string;
 };
 
 // initialises the chat and stores the story
 // stores the story so we can re-use again
-const StoryContext = createContext<{
-  story: Story;
-  latestScenario: AIResponse | undefined;
-  isLoading: boolean;
-  sendAnswer: (text: string) => void;
-  changeLanguage: (language: Language) => Promise<void>;
-  changeReadingAge: (readingAge: LanguageProficiency) => Promise<void>;
-  restartStory: (
-    language?: Language,
-    readingAge?: LanguageProficiency
-  ) => Promise<void>;
-  deleteStory: () => void;
-}>({
-  story: [],
-  deleteStory: () => {},
-  sendAnswer: async () => {},
-  isLoading: false,
-  latestScenario: undefined,
-  changeLanguage: async () => {},
-  changeReadingAge: async () => {},
-  restartStory: async () => {},
-});
 
 export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
   const [story, setStory] = useState<Story>([]);
@@ -61,21 +40,28 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
   const [language, setLanguage] = useState<Language>("American");
   const [isLoading, setIsLoading] = useState(false);
 
+  // Functions to manipulate the story state
   const addToStory = (addition: UserResponse | ModelResponse) => {
-    setStory((prev) => [...prev, addition]);
+    const updatedStory = [...story, addition];
+    setStory(updatedStory);
+    return updatedStory; // return so we don't rely on state being updated
   };
 
-  const sendAnswer = async (answer: string) => {
+  const deleteStory = () => {
+    setStory([]);
+  };
+
+  const sendAnswer = (answer: string) => {
     setIsLoading(true);
     const userResponse: UserResponse = {
       role: "user",
       parts: [{ text: answer }],
     };
-    addToStory(userResponse);
-    getScenarioFromAI();
+    const updatedStory = addToStory(userResponse);
+    getScenarioFromAI(updatedStory);
   };
 
-  const getScenarioFromAI = async () => {
+  const getScenarioFromAI = async (story: Story) => {
     const result = await model.generateContent({ contents: story });
     const modelResponse: ModelResponse = {
       role: "model",
@@ -85,25 +71,21 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(false);
   };
 
-  const changeLanguage = async (newLanguage: Language) => {
+  const changeLanguage = (newLanguage: Language) => {
     setLanguage(newLanguage);
-    await restartStory(newLanguage, readingAge);
+    restartStory(newLanguage, readingAge);
   };
 
-  const changeReadingAge = async (newReadingAge: LanguageProficiency) => {
+  const changeReadingAge = (newReadingAge: LanguageProficiency) => {
     setReadingAge(newReadingAge);
-    await restartStory(language, newReadingAge);
-  };
-
-  const deleteStory = () => {
-    setStory([]);
+    restartStory(language, newReadingAge);
   };
 
   const restartStory = async (
     thisLanguage: Language = language,
     thisReadingAge: LanguageProficiency = readingAge
   ) => {
-    setIsLoading((prev) => true);
+    setIsLoading(true);
     deleteStory();
 
     try {
@@ -115,10 +97,10 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
         parts: [{ text: result.response.text() }],
       };
       addToStory(modelResponse);
-      setIsLoading((prev) => false);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error generating content:", error);
-      setIsLoading((prev) => false);
+      setIsLoading(false);
     }
   };
 
@@ -149,12 +131,4 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
       {children}
     </StoryContext.Provider>
   );
-};
-
-export const useStory = () => {
-  const context = useContext(StoryContext);
-  if (!context) {
-    throw new Error("useStory must be used within a StoryProvider");
-  }
-  return context;
 };
