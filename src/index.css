@@ -1,15 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Antic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Antic&display=swap');
 :root {
   font-family:  Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
+  /* --background-top: #8763D4; */
+    /* --background-bttn: #B0A0FF; */
+  --background-top: #683BC9;
+  --background-bttn: #8763D4;
+
+  
+
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -60,11 +66,9 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    /* color: #747bff; */
   }
   button {
     background-color: #f9f9f9;

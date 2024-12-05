@@ -3,7 +3,13 @@ const { addDynamicIconSelectors } = require('@iconify/tailwind');
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        backgroundTop: 'var(--background-top)',
+        backgroundBttn: 'var(--background-bttn)',
+
+      }
+    },
   },
   plugins: [
     // Iconify plugin

@@ -98,9 +98,11 @@ export function ChooseAdventureGame() {
 
 export function GamePage () {
   return (
-    <>
+    
+    <div className=" bg-gradient-to-b from-backgroundTop to-backgroundBttn  flex justify-center h-screen w-screen">
         <BackArrow />
         <ChooseAdventureGame />
-    </>
+      </div>
+    
   )
 }
