@@ -1,6 +1,4 @@
-export const textToSpeech = async (
-  text: string
-): Promise<HTMLAudioElement | undefined> => {
+export const textToSpeech = async (text: string): Promise<void> => {
   if (!import.meta.env.VITE_ELEVEN_LABS_API_KEY)
     throw new Error("ELEVEN_LABS_API_KEY is not defined");
 
@@ -26,7 +24,7 @@ export const textToSpeech = async (
     const audioBlob = await response.blob();
     const audioUrl = URL.createObjectURL(audioBlob);
     const audio = new Audio(audioUrl);
-    return audio;
+    await audio.play();
   } catch (error) {
     console.error(error);
   }
