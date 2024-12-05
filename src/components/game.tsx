@@ -51,7 +51,7 @@ export function Game() {
   };
 
   return (
-    <div className="p-8 sm:w-[600px]">
+    <div className="p-4">
       <div className="my-6 mb-10">
         <h1 className="text-6xl font-bold font-['Amatic_SC']">
           Your christmas adventure
