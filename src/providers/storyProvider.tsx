@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Language, LanguageProficiency, schema } from "../../types";
+import { type Language, type LanguageProficiency, schema } from "../../types";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { initialPrompt } from "../prompts";
 import type { Content } from "@google/generative-ai";
