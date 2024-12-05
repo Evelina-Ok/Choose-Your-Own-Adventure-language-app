@@ -8,7 +8,7 @@ const FlagCard: React.FC<FlagCardProps> = ({ country, image, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="rounded-lg p-4 flex flex-col items-center bg-white/0"
+      className="rounded-lg p-4 flex flex-col items-center bg-white/0 font-'Antic' text-white"
     >
       <img
         src={image}

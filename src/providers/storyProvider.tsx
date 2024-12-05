@@ -105,15 +105,21 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
   ) => {
     setIsLoading((prev) => true);
     deleteStory();
-    const result = await model.generateContent(
-      initialPrompt(thisLanguage, thisReadingAge)
-    );
-    const modelResponse: ModelResponse = {
-      role: "model",
-      parts: [{ text: result.response.text() }],
-    };
-    addToStory(modelResponse);
-    setIsLoading((prev) => false);
+
+    try {
+      const result = await model.generateContent(
+        initialPrompt(thisLanguage, thisReadingAge)
+      );
+      const modelResponse: ModelResponse = {
+        role: "model",
+        parts: [{ text: result.response.text() }],
+      };
+      addToStory(modelResponse);
+      setIsLoading((prev) => false);
+    } catch (error) {
+      console.error("Error generating content:", error);
+      setIsLoading((prev) => false);
+    }
   };
 
   // Define constants to pass to children
