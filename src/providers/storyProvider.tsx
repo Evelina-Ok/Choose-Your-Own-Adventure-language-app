@@ -61,24 +61,27 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
   const [language, setLanguage] = useState<Language>("American");
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (story.length !== 0 && story[story.length - 1].role === "user") {
-      setIsLoading(true);
-      getScenarioFromAI();
-    }
-  }, [story]);
-
   const addToStory = (addition: UserResponse | ModelResponse) => {
     setStory((prev) => [...prev, addition]);
   };
 
   const sendAnswer = async (answer: string) => {
-    addToStory({ role: "user", parts: [{ text: answer }] });
+    setIsLoading(true);
+    const userResponse: UserResponse = {
+      role: "user",
+      parts: [{ text: answer }],
+    };
+    addToStory(userResponse);
+    getScenarioFromAI();
   };
 
   const getScenarioFromAI = async () => {
     const result = await model.generateContent({ contents: story });
-    addToStory({ role: "model", parts: [{ text: result.response.text() }] });
+    const modelResponse: ModelResponse = {
+      role: "model",
+      parts: [{ text: result.response.text() }],
+    };
+    addToStory(modelResponse);
     setIsLoading(false);
   };
 
@@ -92,7 +95,9 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
     await restartStory(language, newReadingAge);
   };
 
-  const deleteStory = () => setStory((prev) => []);
+  const deleteStory = () => {
+    setStory([]);
+  };
 
   const restartStory = async (
     thisLanguage: Language = language,
@@ -100,13 +105,16 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
   ) => {
     setIsLoading((prev) => true);
     deleteStory();
+
     try {
       const result = await model.generateContent(
         initialPrompt(thisLanguage, thisReadingAge)
       );
-      setStory((prev) => [
-        { role: "model", parts: [{ text: result.response.text() }] },
-      ]);
+      const modelResponse: ModelResponse = {
+        role: "model",
+        parts: [{ text: result.response.text() }],
+      };
+      addToStory(modelResponse);
       setIsLoading((prev) => false);
     } catch (error) {
       console.error("Error generating content:", error);
