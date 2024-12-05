@@ -3,43 +3,25 @@ import { useStory } from "../hooks/useStory";
 import { Options } from "./options";
 
 export function Game() {
-  const { latestScenario, isLoading, sendAnswer, restartStory } = useStory();
+  const { isLoading, latestScenario, sendAnswer } = useStory();
   const [selectedOption, setSelectedOption] = useState<string>("");
 
-  const handleOnSelect = (option: string) => {
-    setSelectedOption(option);
-  };
-
-  const StartButton = () => {
-    if (!latestScenario && !isLoading)
-      return (
-        <button
-          onClick={async () => {
-            await restartStory();
-          }}
-          className="text-slate-950"
-        >
-          Start story
-        </button>
-      );
-  };
-
   const GameContent = () => {
+    if (isLoading) return <div>Loading...</div>;
     if (!latestScenario) return null;
 
     const handleOnConfirm = () => {
       if (isLoading) return; // don't allow multiple prompts to be sent
-      if (selectedOption) {
-        sendAnswer(selectedOption);
-        setSelectedOption("");
-      } else {
-        // TODO: store some error message somewhere. here or the provider
-        console.log("No option selected");
-      }
+      sendAnswer(selectedOption);
+      setSelectedOption("");
+    };
+
+    const handleOnSelect = (option: string) => {
+      setSelectedOption(option);
     };
 
     return (
-      <div className="flex-col flex h-full">
+      <>
         <div
           className={`mb-10 py-2 px-3 rounded-xl bg-gray-200 text-black text-left"
             }`}
@@ -64,20 +46,19 @@ export function Game() {
             Submit
           </button>
         </div>
-      </div>
+      </>
     );
   };
 
   return (
-    <div className="flex-col flex justify-start h-full">
-      <div className="text-center text-white">
-        <h1 className="my-6 mb-10 text-6xl font-bold font-['Amatic_SC']">
-          Choose Your Adventure
+    <div className="p-4">
+      <div className="my-6 mb-10">
+        <h1 className="text-6xl font-bold font-['Amatic_SC']">
+          Your christmas adventure
         </h1>
-        {isLoading && <div>Loading...</div>}
-        <StartButton />
-        <GameContent />
       </div>
+
+      <GameContent />
     </div>
   );
 }
