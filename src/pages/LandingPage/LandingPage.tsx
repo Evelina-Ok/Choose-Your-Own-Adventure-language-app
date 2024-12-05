@@ -1,6 +1,6 @@
 import Button from "../../components/ButtonStart";
 import { NavLink } from "react-router-dom";
-import { useStory } from "../../providers/storyProvider";
+import { useStory } from "../../hooks/useStory";
 
 export function LandingPage() {
   const { story } = useStory();

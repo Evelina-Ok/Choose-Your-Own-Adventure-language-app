@@ -43,8 +43,8 @@ const Option = ({ text, isSelected = false, ...props }: OptionProps) => {
 
   return (
     <div
-      className={`w-80 px-4 bg-white text-black font-'Antic' text-1xl py-3 rounded-full flex justify-between ${
-        isSelected && "bg-red-200"
+      className={`w-80 px-4 text-black font-'Antic' text-1xl py-3 rounded-full flex justify-between ${
+        isSelected ? "bg-red-200" : "bg-white"
       }`}
       {...props}
     >
