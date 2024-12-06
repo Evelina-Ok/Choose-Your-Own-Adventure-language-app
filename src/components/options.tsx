@@ -44,10 +44,11 @@ const Option = ({ text, isSelected = false, ...props }: OptionProps) => {
 
   return (
     <div
-      className={`w-80 px-4 bg-white  text-black font-'Antic' text-1xl py-3 rounded-full flex justify-between items-center ${
-        isSelected ? "bg-red-700" : "bg-white"
+      className={`w-80 px-4 text-black font-'Antic' text-1xl py-3 rounded-full flex justify-between items-center ${
+        isSelected ? "bg-violet-600 border-blue-900 border-2" : "bg-white"
       }`}
       {...props}
+   
     >
       <div className="text-left">{text}</div>
       <div
