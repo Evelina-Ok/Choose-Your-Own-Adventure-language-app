@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { textToSpeech } from "../utils/textToSpeech";
+import speaker from "../assets/listen.svg";
 
 type OptionsProps = {
   options: [string, string, string];
@@ -43,7 +44,7 @@ const Option = ({ text, isSelected = false, ...props }: OptionProps) => {
 
   return (
     <div
-      className={`w-80 px-4 text-black font-'Antic' text-1xl py-3 rounded-full flex justify-between ${
+      className={`w-80 px-4 bg-white  text-black font-'Antic' text-1xl py-3 rounded-full flex justify-between items-center ${
         isSelected ? "bg-red-200" : "bg-white"
       }`}
       {...props}
@@ -51,14 +52,14 @@ const Option = ({ text, isSelected = false, ...props }: OptionProps) => {
       <div className="text-left">{text}</div>
       <div
         onClick={handleOnPlay}
-        className="w-8 h-8 rounded-full bg-black/50 text-white"
+        className="pt-2 rounded-full justify-center bg-amber-500 p-2"
         role="button"
         aria-disabled={isPlaying}
       >
         <img
-          src="src/assets/speaker.svg"
+          src={speaker}
           alt="Play"
-          className="w-full h-full object-cover"
+          className="size-[2rem] justify-center"
         />
       </div>
     </div>
