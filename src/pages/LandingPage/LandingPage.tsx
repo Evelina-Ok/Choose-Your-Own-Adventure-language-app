@@ -5,12 +5,12 @@ import { useStory } from "../../hooks/useStory";
 export function LandingPage() {
   const { story } = useStory();
   return (
-    <div className="bg-gray-700 flex justify-center h-screen w-screen">
+    <div className=" bg-gradient-to-b from-backgroundTop to-backgroundBttn  flex justify-center h-screen w-screen">
       <div className="text-center text-white">
-        <h1 className="my-40 mb-36 text-8xl font-bold font-['Amatic_SC']">
+        <h1 className="my-40 mb-36 text-8xl font-bold font-['Jersey_10']">
           TALK TO ME
         </h1>
-        <div>
+        <div className="flex flex-col">
           {story.length === 0 ? (
             <NavLink to={"/language"}>
               <Button text="START" />
@@ -21,7 +21,9 @@ export function LandingPage() {
                 <Button text="CONTINUE" />
               </NavLink>
 
-              <Button text="CHAPTERS" />
+              <NavLink to={""}>
+                <Button text="CHAPTERS" />
+              </NavLink>
 
               <NavLink to={"/language"}>
                 <Button text="START GAME IN ANOTHER LANGUAGE" />
