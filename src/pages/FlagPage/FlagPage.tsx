@@ -3,13 +3,13 @@ import { Language } from "../../../types";
 import FlagCard from "../../components/FlagCard";
 import { BackArrow } from "../../components/BackArrow";
 import { useStory } from "../../hooks/useStory";
-// import american from "../../assets/usaFlag";
-// import spanish from "../../assets/SpainFlag";
-// import icelandic from "../../assets/IcelandFlag";
-// import italian from "../../assets/ItalyFlag";
-// import polish from "../../assets/PolandFlag";
-// import norwegian from "../../assets/NorwayFlag";
-// import german from "../../assets/GermanFlag";
+import american from "../../assets/usaFlag.svg";
+import spanish from "../../assets/SpainFlag.svg";
+import icelandic from "../../assets/IcelandFlag.svg";
+import italian from "../../assets/ItalyFlag.svg";
+import polish from "../../assets/PolandFlag.svg";
+import norwegian from "../../assets/NorwayFlag.svg";
+import german from "../../assets/GermanFlag.svg";
 import danish  from "../../assets/DenmarkFlag.svg";
 
 
@@ -21,13 +21,13 @@ type Flag = {
 export function FlagPage() {
   const { changeLanguage } = useStory();
   const flags: Flag[] = [
-    // { country: "American", image: src={american} },
-    { country: "Spanish", image: "src/assets/SpainFlag.svg" },
-    { country: "Icelandic", image: "src/assets/IcelandFlag.svg" },
-    { country: "Italian", image: "src/assets/ItalyFlag.svg" },
-    { country: "Polish", image: "src/assets/PolandFlag.svg" },
-    { country: "Norwegian", image: "src/assets/NorwayFlag.svg" },
-    { country: "German", image: "src/assets/GermanFlag.svg" },
+    { country: "American", image: american },
+    { country: "Spanish", image: spanish },
+    { country: "Icelandic", image: icelandic },
+    { country: "Italian", image: italian },
+    { country: "Polish", image: polish },
+    { country: "Norwegian", image: norwegian },
+    { country: "German", image: german },
     { country: "Danish", image: danish },
   ];
 
