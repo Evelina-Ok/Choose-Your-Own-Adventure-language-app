@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { StoryProvider } from "./providers/storyProvider";
-import { LandingPage } from "./_pages/LandingPage/LandingPage";
-import { FlagPage } from "./_pages/FlagPage/FlagPage";
-import { GamePage } from "./_pages/GamePage/GamePage";
+import { LandingPage } from "./pages/LandingPage/LandingPage";
+import { FlagPage } from "./pages/FlagPage/FlagPage";
+import { GamePage } from "./pages/GamePage/GamePage";
 
 function App() {
   return (
