@@ -51,9 +51,9 @@ export function Game() {
   };
 
   return (
-    <div className="p-4">
-      <div className="my-6 mb-10">
-        <h1 className="text-6xl font-bold font-['Amatic_SC']">
+    <div className="p-4 bg-gradient-to-b from-backgroundTop to-backgroundBttn min-h-screen w-dvw flex flex-col items-center">
+      <div className="my-10 mb-10">
+        <h1 className="text-6xl pt-4 font-bold font-['Jersey_10']">
           Your christmas adventure
         </h1>
       </div>

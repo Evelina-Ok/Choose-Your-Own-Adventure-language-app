@@ -44,7 +44,7 @@ const Option = ({ text, isSelected = false, ...props }: OptionProps) => {
 
   return (
     <div
-      className={`w-80 px-4 bg-white  text-black font-'Antic' text-1xl py-3 rounded-full flex justify-between ${
+      className={`w-80 px-4 bg-white  text-black font-'Antic' text-1xl py-3 rounded-full flex justify-between items-center ${
         isSelected ? "bg-red-200" : "bg-white"
       }`}
       {...props}
@@ -52,7 +52,7 @@ const Option = ({ text, isSelected = false, ...props }: OptionProps) => {
       <div className="text-left">{text}</div>
       <div
         onClick={handleOnPlay}
-        className="pt-2.5 rounded-full justify-center bg-amber-500 p-2.5"
+        className="pt-2 rounded-full justify-center bg-amber-500 p-2"
         role="button"
         aria-disabled={isPlaying}
       >
