@@ -3,7 +3,9 @@ import { useStory } from "../hooks/useStory";
 import { Options } from "./options";
 
 export function Game() {
+  // const { isLoading, latestScenario, sendAnswer,goBack } = useStory();
   const { isLoading, latestScenario, sendAnswer } = useStory();
+
   const [selectedOption, setSelectedOption] = useState<string>("");
 
   const GameContent = () => {
@@ -45,6 +47,7 @@ export function Game() {
           >
             Submit
           </button>
+          {/* <button onClick={goBack}>Go back</button> */}
         </div>
       </>
     );

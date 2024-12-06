@@ -14,6 +14,7 @@ export const StoryContext = createContext<{
     readingAge?: LanguageProficiency
   ) => Promise<void>;
   deleteStory: () => void;
+  // goBack:()=> void;
 }>({
   story: [],
   deleteStory: () => {},
@@ -23,4 +24,5 @@ export const StoryContext = createContext<{
   changeLanguage: async () => {},
   changeReadingAge: async () => {},
   restartStory: async () => {},
+  // goBack:()=>{}
 });

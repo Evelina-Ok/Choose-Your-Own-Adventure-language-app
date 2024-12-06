@@ -61,6 +61,14 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
     getScenarioFromAI(updatedStory);
   };
 
+  // const goBack = () => {
+  //   if(story.length<2) return restartStory()
+  //   if(story[story.length-1].role !== "model") return
+  //   const tempStory = [...story].slice(0,story.length-2)
+  //   setStory(tempStory)
+  //   getScenarioFromAI(tempStory)
+  // }
+
   const getScenarioFromAI = async (story: Story) => {
     const result = await model.generateContent({ contents: story });
     const modelResponse: ModelResponse = {
@@ -126,6 +134,7 @@ export const StoryProvider = ({ children }: { children: React.ReactNode }) => {
         changeReadingAge,
         restartStory,
         deleteStory,
+        // goBack
       }}
     >
       {children}
